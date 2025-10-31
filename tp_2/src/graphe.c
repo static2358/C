@@ -67,16 +67,11 @@ Graphe *chargeGraphe(const char *nomFichier) {
                 fclose(f);
                 return NULL;
             }
-            // Calculer les degrés
-            if (g->adjacence[i][j] == 1 && i != j) {
+            // Calculer les degrés (compter les voisins)
+            if (g->adjacence[i][j] == 1) {
                 g->degres[i]++;
             }
         }
-    }
-    
-    // Diviser les degrés par 2 car on a compté chaque arête deux fois
-    for (int i = 0; i < nbSommets; i++) {
-        g->degres[i] /= 2;
     }
     
     fclose(f);
@@ -339,11 +334,6 @@ void afficherColoration(Graphe *g) {
         printf("\n");
     }
     
-    printf("\n--- ANALYSE DE COMPLEXITE ---\n");
-    printf("Tri des sommets par degre    : O(n²) avec tri a bulles\n");
-    printf("Attribution des couleurs     : O(n²) parcours + verification\n");
-    printf("Complexite totale            : O(n²)\n");
-    printf("Avec n = %d sommets\n", g->nbSommets);
 }
 
 // Exporter le graphe au format DOT avec coloration
