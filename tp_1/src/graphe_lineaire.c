@@ -187,7 +187,7 @@ void exporterDot(Graphe *g, const char *nomFichier) {
     
     // Couleurs pour la visualisation (palette)
     const char *couleursPalette[] = {
-        "blue", "green", "yellow", "red", 
+        "red", "blue", "green", "yellow", 
         "pink", "cyan", "violet", "gold", "coral", "lime"
     };
     int nbCouleursPalette = 10;
