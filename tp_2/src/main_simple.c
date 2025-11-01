@@ -1,6 +1,5 @@
 #include "graphe.h"
 
-// Noms des pays (selon ta matrice)
 const char *PAYS[] = {
     "France (Fr)", 
     "Espagne (Es)", 
@@ -16,12 +15,7 @@ const char *PAYS[] = {
 };
 
 int main(void) {
-    printf("========================================\n");
-    printf("COLORATION DE LA CARTE D'EUROPE\n");
-    printf("Algorithme de Welsh-Powell\n");
-    printf("========================================\n\n");
-    
-    // Charger le graphe depuis le fichier
+ 
     Graphe *g = chargeGraphe("carte_europe.txt");
     
     if (!g) {
@@ -29,13 +23,10 @@ int main(void) {
         return 1;
     }
     
-    // Afficher la matrice d'adjacence
     afficherGraphe(g);
     
-    // Appliquer Welsh-Powell
     welshPowell(g);
-    
-    // Libérer la mémoire
+
     libererGraphe(g);
     
     printf("\n========================================\n");
