@@ -1,24 +1,8 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 
-# Create an empty graph
-G = nx.Graph()
 
-# Add vertices (nodes) to the graph
-G.add_nodes_from([1, 2, 3, 4, 5])
-
-# Add edges to the graph
-G.add_edges_from([(1, 2), (2, 3), (3, 4), (4, 5), (5, 1)])
-
-# Draw the graph
-nx.draw(G, with_labels=True, node_color='lightblue', edge_color='gray')
-
-# Show the graph
-plt.show()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-class Graph:
+class GraphBacktracking:
     def __init__(self, vertices):
         self.vertices = vertices
         self.adjMatrix = [[0] * vertices for _ in range(vertices)]
@@ -71,23 +55,7 @@ class Graph:
         return True
 
 
-g = Graph(5)
-
-g.add_edge(0, 1)
-g.add_edge(0, 2)
-g.add_edge(1, 2)
-g.add_edge(1, 3)
-g.add_edge(2, 3)
-g.add_edge(3, 4)
-g.add_edge(1, 4)
-
-m = 4 
-g.graph_coloring(m)
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-class Graph:
+class GraphWelshPowell:
     def __init__(self, vertices):
         self.vertices = vertices
         self.adjMatrix = [[0] * vertices for _ in range(vertices)]
@@ -107,24 +75,17 @@ class Graph:
         color = [-1] * self.vertices
         current_color = 0
 
-        # Color each vertex
         for i in range(self.vertices):
             vertex = sorted_vertices[i]
             
-            # If this vertex is not yet colored
             if color[vertex] == -1:
-                # Color it with current_color
                 color[vertex] = current_color
                 
-                # Try to color all other non-adjacent vertices with the same color
                 for j in range(i + 1, self.vertices):
                     v = sorted_vertices[j]
                     
-                    # If v is not yet colored
                     if color[v] == -1:
-                        # Check if v is not adjacent to vertex
                         if self.adjMatrix[vertex][v] == 0:
-                            # Check that v is not adjacent to any vertex having current_color
                             can_color = True
                             k = 0
                             while k < self.vertices and can_color:
@@ -135,7 +96,6 @@ class Graph:
                             if can_color:
                                 color[v] = current_color
                 
-                # Move to the next color
                 current_color += 1
 
         num_colors = current_color
@@ -144,7 +104,6 @@ class Graph:
         for i in range(self.vertices):
             print("Vertex {}: Color {}".format(i, color[i]))
 
-        # Visualisation
         G_viz = nx.Graph()
         for i in range(self.vertices):
             for j in range(i+1, self.vertices):
@@ -164,14 +123,39 @@ class Graph:
         return num_colors
 
 
-g = Graph(5)
+if __name__ == "__main__":
+    G = nx.Graph()
 
-g.add_edge(0, 1)
-g.add_edge(0, 2)
-g.add_edge(1, 2)
-g.add_edge(1, 3)
-g.add_edge(2, 3)
-g.add_edge(3, 4)
-g.add_edge(1, 4)
+    G.add_nodes_from([1, 2, 3, 4, 5])
 
-g.welsh_powell()
+    G.add_edges_from([(1, 2), (2, 3), (3, 4), (4, 5), (5, 1)])
+
+    nx.draw(G, with_labels=True, node_color='lightblue', edge_color='gray')
+
+    plt.show()
+
+
+    g = GraphBacktracking(5)
+
+    g.add_edge(0, 1)
+    g.add_edge(0, 2)
+    g.add_edge(1, 2)
+    g.add_edge(1, 3)
+    g.add_edge(2, 3)
+    g.add_edge(3, 4)
+    g.add_edge(1, 4)
+
+    m = 4 
+    g.graph_coloring(m)
+
+    g = GraphWelshPowell(5)
+
+    g.add_edge(0, 1)
+    g.add_edge(0, 2)
+    g.add_edge(1, 2)
+    g.add_edge(1, 3)
+    g.add_edge(2, 3)
+    g.add_edge(3, 4)
+    g.add_edge(1, 4)
+
+    g.welsh_powell()

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define MAX_VERTICES 100
+#define MAX_VERTICES 100000
 
 struct Graph {
     int vertices;
