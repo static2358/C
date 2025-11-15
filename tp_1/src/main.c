@@ -34,29 +34,5 @@ int main(void) {
     
     libererGraphe(g1);
     
-    printf("\n\n========================================\n");
-    printf("EXEMPLE 2: Triangle (graphe complet K3)\n");
-    printf("----------------------------------\n\n");
-    
-    Graphe *g2 = creerGraphe(3);
-    ajouterArete(g2, 0, 1);
-    ajouterArete(g2, 1, 2);
-    ajouterArete(g2, 2, 0);
-    
-    afficherMatrice(g2);
-    afficherDegres(g2);
-    
-    printf("Application de l'algorithme de Welsh-Powell:\n");
-    printf("---------------------------------------------\n");
-    welshPowell(g2);
-    
-    printf("\n");
-    afficherColoration(g2);
-    
-    // Exporter le graphe au format DOT
-    exporterDot(g2, "graph2.dot");
-    
-    libererGraphe(g2);
-    
     return 0;
 }

@@ -1,9 +1,0 @@
-graph G {
-    node [style=filled];
-    0 [fillcolor=red, label="0\n(c0)"];
-    1 [fillcolor=blue, label="1\n(c1)"];
-    2 [fillcolor=green, label="2\n(c2)"];
-    0 -- 1;
-    0 -- 2;
-    1 -- 2;
-}
