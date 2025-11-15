@@ -1,13 +1,10 @@
 #include "graphe.h"
 
 int main(void) {
-    printf("========================================\n");
     printf("ALGORITHME DE WELSH-POWELL\n");
     printf("VERSION NORMALE (matrice 2D)\n");
-    printf("========================================\n\n");
     
     printf("EXEMPLE 1: Graphe a 5 sommets\n");
-    printf("----------------------------------\n\n");
     
     Graphe *g1 = creerGraphe(5);
     
@@ -24,7 +21,6 @@ int main(void) {
     afficherDegres(g1);
     
     printf("Application de l'algorithme de Welsh-Powell:\n");
-    printf("---------------------------------------------\n");
     welshPowell(g1);
     
     printf("\n");

@@ -7,14 +7,14 @@
 
 // Structure pour un élément de la liste des voisins
 typedef struct voisin {
-    struct noeud *noeud;          // Pointeur vers le noeud voisin
-    struct voisin *suivant;       // Prochain voisin dans la liste
+    struct noeud *noeud;          // Pointeur vers le noeud voisi
+    struct voisin *suivant;       
 } voisin;
 
 // Structure pour un noeud du graphe
 typedef struct noeud {
-    char *nom;                    // Nom du pays
-    voisin *voisins;              // Liste chaînée des voisins
+    char *nom;                  
+    voisin *voisins;              
 } noeud;
 
 // Prototypes des fonctions

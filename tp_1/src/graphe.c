@@ -1,9 +1,9 @@
 #include "graphe.h"
 
-// Structure du graphe - VERSION NORMALE (matrice 2D)
+// Structure du graphe matrice 2D
 struct Graphe {
     int nbSommets;          
-    int **adjacence;        // Tableau 2D : int**
+    int **adjacence;        
     int *couleurs;          
     int *degres;            
 };
@@ -39,12 +39,10 @@ void ajouterArete(Graphe *g, int sommet1, int sommet2) {
 
 // Trier les sommets par ordre décroissant de degré
 void trierSommetsParDegre(Graphe *g, int *sommetsOrdre) {
-    // Initialiser l'ordre des sommets
     for (int i = 0; i < g->nbSommets; i++) {
         sommetsOrdre[i] = i;
     }
     
-    // Tri à bulles par degré décroissant
     for (int i = 0; i < g->nbSommets - 1; i++) {
         for (int j = 0; j < g->nbSommets - i - 1; j++) {
             if (g->degres[sommetsOrdre[j]] < g->degres[sommetsOrdre[j + 1]]) {
@@ -68,10 +66,8 @@ int couleurUtiliseeParVoisin(Graphe *g, int sommet, int couleur) {
 
 // Algorithme de Welsh-Powell
 void welshPowell(Graphe *g) {
-    // Tableau pour stocker l'ordre des sommets triés par degré
     int *sommetsOrdre = (int *)malloc(g->nbSommets * sizeof(int));
-    
-    // Étape 1 : Trier les sommets par ordre décroissant de degré
+
     trierSommetsParDegre(g, sommetsOrdre);
     
     printf("Ordre des sommets par degre decroissant: ");
@@ -80,23 +76,18 @@ void welshPowell(Graphe *g) {
     }
     printf("\n\n");
     
-    // Étape 2 : Assigner les couleurs
     int couleurCourante = 0;
     
     for (int i = 0; i < g->nbSommets; i++) {
         int sommet = sommetsOrdre[i];
         
-        // Si le sommet n'a pas encore de couleur
         if (g->couleurs[sommet] == -1) {
-            // Assigner la couleur courante
             g->couleurs[sommet] = couleurCourante;
             printf("Sommet %d -> Couleur %d\n", sommet, couleurCourante);
             
-            // Essayer d'assigner la même couleur aux sommets non adjacents
             for (int j = i + 1; j < g->nbSommets; j++) {
                 int autreSommet = sommetsOrdre[j];
                 
-                // Si pas encore coloré et pas adjacent
                 if (g->couleurs[autreSommet] == -1 && 
                     !couleurUtiliseeParVoisin(g, autreSommet, couleurCourante)) {
                     g->couleurs[autreSommet] = couleurCourante;
@@ -140,11 +131,9 @@ void afficherDegres(Graphe *g) {
     printf("\n");
 }
 
-// Afficher le résultat de la coloration
 void afficherColoration(Graphe *g) {
     printf("Resultat de la coloration:\n");
     
-    // Trouver le nombre de couleurs utilisées
     int maxCouleur = -1;
     for (int i = 0; i < g->nbSommets; i++) {
         if (g->couleurs[i] > maxCouleur) {
@@ -154,7 +143,6 @@ void afficherColoration(Graphe *g) {
     
     printf("Nombre de couleurs utilisees: %d\n\n", maxCouleur + 1);
     
-    // Afficher par couleur
     for (int c = 0; c <= maxCouleur; c++) {
         printf("Couleur %d: ", c);
         for (int i = 0; i < g->nbSommets; i++) {
@@ -177,14 +165,12 @@ void exporterDot(Graphe *g, const char *nomFichier) {
     fprintf(f, "graph G {\n");
     fprintf(f, "    node [style=filled];\n");
     
-    // Couleurs pour la visualisation (palette)
     const char *couleursPalette[] = {
         "red", "blue", "green", "yellow", 
         "pink", "cyan", "violet", "gold", "coral", "lime"
     };
     int nbCouleursPalette = 10;
     
-    // Définir les sommets avec leurs couleurs
     for (int i = 0; i < g->nbSommets; i++) {
         int couleur = g->couleurs[i];
         const char *couleurHTML = couleursPalette[couleur % nbCouleursPalette];

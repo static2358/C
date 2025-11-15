@@ -15,9 +15,5 @@ int main(void) {
 
     libererGraphe(g);
     
-    printf("\n========================================\n");
-    printf("Coloration terminee\n");
-    printf("========================================\n");
-    
     return 0;
 }

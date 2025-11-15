@@ -1,9 +1,8 @@
 #include "graphe_liste.h"
 
 int main(void) {
-    printf("=== CREATION D'UN GRAPHE AVEC LISTE D'ADJACENCE ===\n\n");
+    printf("CREATION D'UN GRAPHE AVEC LISTE D'ADJACENCE\n\n");
     
-    // Créer les noeuds (pays européens)
     noeud *france = creerNoeud("France");
     noeud *espagne = creerNoeud("Espagne");
     noeud *allemagne = creerNoeud("Allemagne");
@@ -19,12 +18,10 @@ int main(void) {
     printf("  - %s\n", suisse->nom);
     printf("  - %s\n", belgique->nom);
     
-    // Tableau des noeuds pour faciliter la manipulation
     noeud *graphe[6] = {france, espagne, allemagne, italie, suisse, belgique};
     int nb_noeuds = 6;
     
-    // Ajouter les arêtes (frontières)
-    printf("\n=== AJOUT DES ARETES (FRONTIERES) ===\n\n");
+    printf("\nAJOUT DES ARETES (FRONTIERES)\n\n");
     
     ajouterArete(france, espagne);
     printf("Arete ajoutee: France -- Espagne\n");
@@ -53,17 +50,14 @@ int main(void) {
     ajouterArete(italie, suisse);
     printf("Arete ajoutee: Italie -- Suisse\n");
     
-    // Afficher le graphe
     afficherGraphe(graphe, nb_noeuds);
     
-    // Afficher les degrés
-    printf("\n=== DEGRES DES NOEUDS ===\n\n");
+    printf("\nDEGRES DES NOEUDS\n\n");
     for (int i = 0; i < nb_noeuds; i++) {
         printf("%s: degre = %d\n", graphe[i]->nom, degre(graphe[i]));
     }
     
-    // Test de recherche de voisins
-    printf("\n=== TEST: LISTE DES VOISINS ===\n\n");
+    printf("\nLISTE DES VOISINS\n\n");
     printf("Voisins de France:\n");
     voisin *v = france->voisins;
     int i = 1;
@@ -80,10 +74,9 @@ int main(void) {
         v = v->suivant;
     }
     
-    // Libérer la mémoire
     libererGraphe(graphe, nb_noeuds);
     
-    printf("\n=== MEMOIRE LIBEREE ===\n");
+    printf("\nMEMOIRE LIBEREEn");
     
     return 0;
 }

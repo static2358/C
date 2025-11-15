@@ -1,22 +1,20 @@
 #include "graphe.h"
 
-// Structure du graphe - VERSION LINÉARISÉE (matrice 1D)
+// Structure du graphe 1D
 struct Graphe {
     int nbSommets;          
-    int *adjacence;         // Tableau 1D : int*
+    int *adjacence;        
     int *couleurs;          
     int *degres;            
 };
 
-// VERSION LINÉARISÉE : Matrice d'adjacence en tableau 1D (int*)
-// Accès : adjacence[i * nbSommets + j] au lieu de adjacence[i][j]
 
-// Créer un graphe avec n sommets (VERSION LINÉARISÉE)
+
+// Créer un graphe avec n sommets 
 Graphe *creerGraphe(int nbSommets) {
     Graphe *g = (Graphe *)malloc(sizeof(Graphe));
     g->nbSommets = nbSommets;
 
-    // CHANGEMENT : Un seul calloc pour n*n éléments
     g->adjacence = (int *)calloc(nbSommets * nbSommets, sizeof(int));
     
     g->couleurs = (int *)malloc(nbSommets * sizeof(int));
@@ -30,10 +28,9 @@ Graphe *creerGraphe(int nbSommets) {
     return g;
 }
 
-// Ajouter une arête entre deux sommets (VERSION LINÉARISÉE)
+// Ajouter une arête entre deux sommets
 void ajouterArete(Graphe *g, int sommet1, int sommet2) {
     int n = g->nbSommets;
-    // Utiliser la formule : adjacence[i*n + j]
     g->adjacence[sommet1 * n + sommet2] = 1;
     g->adjacence[sommet2 * n + sommet1] = 1;
     g->degres[sommet1]++;
@@ -42,12 +39,10 @@ void ajouterArete(Graphe *g, int sommet1, int sommet2) {
 
 // Trier les sommets par ordre décroissant de degré
 void trierSommetsParDegre(Graphe *g, int *sommetsOrdre) {
-    // Initialiser l'ordre des sommets
     for (int i = 0; i < g->nbSommets; i++) {
         sommetsOrdre[i] = i;
     }
     
-    // Tri à bulles par degré décroissant
     for (int i = 0; i < g->nbSommets - 1; i++) {
         for (int j = 0; j < g->nbSommets - i - 1; j++) {
             if (g->degres[sommetsOrdre[j]] < g->degres[sommetsOrdre[j + 1]]) {
@@ -63,7 +58,6 @@ void trierSommetsParDegre(Graphe *g, int *sommetsOrdre) {
 int couleurUtiliseeParVoisin(Graphe *g, int sommet, int couleur) {
     int n = g->nbSommets;
     for (int i = 0; i < n; i++) {
-        // Utiliser la formule : adjacence[sommet*n + i]
         if (g->adjacence[sommet * n + i] == 1 && g->couleurs[i] == couleur) {
             return 1;
         }
@@ -73,10 +67,7 @@ int couleurUtiliseeParVoisin(Graphe *g, int sommet, int couleur) {
 
 // Algorithme de Welsh-Powell
 void welshPowell(Graphe *g) {
-    // Tableau pour stocker l'ordre des sommets triés par degré
     int *sommetsOrdre = (int *)malloc(g->nbSommets * sizeof(int));
-    
-    // Étape 1 : Trier les sommets par ordre décroissant de degré
     trierSommetsParDegre(g, sommetsOrdre);
     
     printf("Ordre des sommets par degre decroissant: ");
@@ -85,23 +76,21 @@ void welshPowell(Graphe *g) {
     }
     printf("\n\n");
     
-    // Étape 2 : Assigner les couleurs
     int couleurCourante = 0;
     
     for (int i = 0; i < g->nbSommets; i++) {
         int sommet = sommetsOrdre[i];
         
-        // Si le sommet n'a pas encore de couleur
         if (g->couleurs[sommet] == -1) {
-            // Assigner la couleur courante
+
             g->couleurs[sommet] = couleurCourante;
             printf("Sommet %d -> Couleur %d\n", sommet, couleurCourante);
             
-            // Essayer d'assigner la même couleur aux sommets non adjacents
+
             for (int j = i + 1; j < g->nbSommets; j++) {
                 int autreSommet = sommetsOrdre[j];
                 
-                // Si pas encore coloré et pas adjacent
+
                 if (g->couleurs[autreSommet] == -1 && 
                     !couleurUtiliseeParVoisin(g, autreSommet, couleurCourante)) {
                     g->couleurs[autreSommet] = couleurCourante;
@@ -117,7 +106,7 @@ void welshPowell(Graphe *g) {
     free(sommetsOrdre);
 }
 
-// Afficher la matrice d'adjacence (VERSION LINÉARISÉE)
+// Afficher la matrice d'adjacence
 void afficherMatrice(Graphe *g) {
     int n = g->nbSommets;
     printf("Matrice d'adjacence:\n");
@@ -130,7 +119,6 @@ void afficherMatrice(Graphe *g) {
     for (int i = 0; i < n; i++) {
         printf("%d: ", i);
         for (int j = 0; j < n; j++) {
-            // Utiliser la formule : adjacence[i*n + j]
             printf("%d ", g->adjacence[i * n + j]);
         }
         printf("\n");
@@ -151,7 +139,6 @@ void afficherDegres(Graphe *g) {
 void afficherColoration(Graphe *g) {
     printf("Resultat de la coloration:\n");
     
-    // Trouver le nombre de couleurs utilisées
     int maxCouleur = -1;
     for (int i = 0; i < g->nbSommets; i++) {
         if (g->couleurs[i] > maxCouleur) {
@@ -161,7 +148,6 @@ void afficherColoration(Graphe *g) {
     
     printf("Nombre de couleurs utilisees: %d\n\n", maxCouleur + 1);
     
-    // Afficher par couleur
     for (int c = 0; c <= maxCouleur; c++) {
         printf("Couleur %d: ", c);
         for (int i = 0; i < g->nbSommets; i++) {
@@ -173,7 +159,7 @@ void afficherColoration(Graphe *g) {
     }
 }
 
-// Exporter le graphe au format DOT avec coloration (VERSION LINÉARISÉE)
+// Exporter le graphe au format DOT avec coloration
 void exporterDot(Graphe *g, const char *nomFichier) {
     FILE *f = fopen(nomFichier, "w");
     if (!f) {
@@ -185,14 +171,12 @@ void exporterDot(Graphe *g, const char *nomFichier) {
     fprintf(f, "graph G {\n");
     fprintf(f, "    node [style=filled];\n");
     
-    // Couleurs pour la visualisation (palette)
     const char *couleursPalette[] = {
         "red", "blue", "green", "yellow", 
         "pink", "cyan", "violet", "gold", "coral", "lime"
     };
     int nbCouleursPalette = 10;
-    
-    // Définir les sommets avec leurs couleurs
+
     for (int i = 0; i < n; i++) {
         int couleur = g->couleurs[i];
         const char *couleurHTML = couleursPalette[couleur % nbCouleursPalette];
@@ -200,10 +184,8 @@ void exporterDot(Graphe *g, const char *nomFichier) {
                 i, couleurHTML, i, couleur);
     }
     
-    // Définir les arêtes (parcourir seulement la moitié supérieure pour éviter les doublons)
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
-            // Utiliser la formule : adjacence[i*n + j]
             if (g->adjacence[i * n + j] == 1) {
                 fprintf(f, "    %d -- %d;\n", i, j);
             }
@@ -216,9 +198,8 @@ void exporterDot(Graphe *g, const char *nomFichier) {
     printf("    Pour visualiser: dot -Tpng %s -o graph.png\n\n", nomFichier);
 }
 
-// Libérer la mémoire du graphe (VERSION LINÉARISÉE - SIMPLIFIÉ)
+// Libérer la mémoire du graphe
 void libererGraphe(Graphe *g) {
-    // CHANGEMENT : Un seul free pour la matrice linéarisée
     free(g->adjacence);
     free(g->couleurs);
     free(g->degres);

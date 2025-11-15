@@ -1,13 +1,11 @@
 #ifndef LISTE_H
 #define LISTE_H
 
-// Structure pour représenter un point avec ses coordonnées
 typedef struct {
     int x;
     int y;
 } point;
 
-// Structure pour une cellule de la liste doublement chaînée
 typedef struct cellule {
     point p;
     struct cellule *suiv;

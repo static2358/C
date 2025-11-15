@@ -182,7 +182,6 @@ void exporterArbreDot(noeud *n, const char *nomFichier) {
     if (!n) {
         fprintf(f, "\n");
     } else if (!n->filsGauche && !n->filsDroit) {
-        // Arbre avec un seul nœud
         fprintf(f, "    %d [label=\"%c(%d)\"];\n", n->num, n->val, n->num);
     } else {
         ecrireNoeudDot(n, f);

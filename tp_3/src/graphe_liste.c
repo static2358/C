@@ -22,13 +22,11 @@ void ajouterArete(noeud *n1, noeud *n2) {
         return;
     }
     
-    // Ajouter n2 aux voisins de n1
     voisin *v1 = (voisin *)malloc(sizeof(voisin));
     v1->noeud = n2;
     v1->suivant = n1->voisins;
     n1->voisins = v1;
     
-    // Ajouter n1 aux voisins de n2 (graphe non orienté)
     voisin *v2 = (voisin *)malloc(sizeof(voisin));
     v2->noeud = n1;
     v2->suivant = n2->voisins;
@@ -72,7 +70,6 @@ int degre(noeud *n) {
 // Libérer la mémoire du graphe
 void libererGraphe(noeud **graphe, int nb_noeuds) {
     for (int i = 0; i < nb_noeuds; i++) {
-        // Libérer la liste des voisins
         voisin *v = graphe[i]->voisins;
         while (v != NULL) {
             voisin *tmp = v;
@@ -80,7 +77,6 @@ void libererGraphe(noeud **graphe, int nb_noeuds) {
             free(tmp);
         }
         
-        // Libérer le nom et le noeud
         free(graphe[i]->nom);
         free(graphe[i]);
     }

@@ -33,12 +33,10 @@ noeud *rechercheNoeud(noeud *n, int num_noeud) {
     if (n->num == num_noeud)
         return n;
     
-    // Chercher dans le premier fils
     tmpNoeud = rechercheNoeud(n->premierFils, num_noeud);
     if (tmpNoeud != NULL)
         return tmpNoeud;
     
-    // Chercher dans les frères
     return rechercheNoeud(n->frèreSuivant, num_noeud);
 }
 
@@ -50,11 +48,9 @@ void ajouterEnfant(noeud *parent, noeud *enfant) {
         return;
     }
     
-    // Si pas d'enfant, celui-ci devient le premier fils
     if (parent->premierFils == NULL) {
         parent->premierFils = enfant;
     } else {
-        // Sinon, parcourir la liste des frères jusqu'au dernier
         noeud *frère = parent->premierFils;
         while (frère->frèreSuivant != NULL) {
             frère = frère->frèreSuivant;
