@@ -6,8 +6,8 @@
 int main(void) {
     srand(time(NULL));
 
-    printf("Creation d'un arbre aleatoire de hauteur 4...\n");
-    noeud *arbre = creerArbreAleatoire(4, 'A');
+    printf("Creation d'un arbre aleatoire de hauteur 6...\n");
+    noeud *arbre = creerArbreAleatoire(6, 'A');
     
     if (arbre == NULL) {
         printf("Erreur: arbre vide\n");
